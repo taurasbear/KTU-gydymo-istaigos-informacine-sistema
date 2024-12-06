@@ -11,13 +11,6 @@ import RegisterDoctorTimetable from './pages/RegisterDoctorTimetable/RegisterDoc
 
 function App() {
 
-  useEffect(() => {
-    fetch('http://localhost:5000/WeatherForecast')
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error fetching data:', error));;
-  }, []);
-
   return (
     <Router>
       <Routes>

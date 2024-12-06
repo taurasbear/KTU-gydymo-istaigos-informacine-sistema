@@ -1,0 +1,32 @@
+services:
+  giis.backend:
+    image: giis-backend
+    build:
+      context: ./giis-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - giis-app
+    volumes:
+      - ./giis-backend:/usr/src/app
+
+  giis.frontend:
+    image: giis-frontend
+    build:
+      context: ./giis-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - giis-app
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:5000
+    depends_on:
+      - giis.backend
+    volumes:
+      - ./giis-frontend:/usr/src/app
+      - /usr/src/app/node_modules
+networks:
+  giis-app:
+    driver: bridge
