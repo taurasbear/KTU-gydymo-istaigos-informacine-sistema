@@ -8,9 +8,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install any needed packages
-RUN npm install --only=development
+RUN npm install && npm install -g nodemon
 
-RUN chmod +x ./node_modules/.bin/nodemon
+#RUN chmod +x ./node_modules/.bin/nodemon
 
 # Copy the rest of the application code
 COPY . .
