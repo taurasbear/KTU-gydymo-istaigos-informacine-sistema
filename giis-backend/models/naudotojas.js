@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'naudotojasId',
         as: 'gydytojas'
       });
+      Naudotojas.hasMany(models.Zinute, {
+        foreignKey: 'naudotojasId',
+        as: 'zinute'
+      });
+      Naudotojas.hasMany(models.Rezervacija, {
+        foreignKey: 'naudotojasId',
+        as: 'rezervacija'
+      });
     }
   }
   Naudotojas.init({

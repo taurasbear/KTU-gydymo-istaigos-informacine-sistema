@@ -8,7 +8,15 @@ module.exports = (sequelize, DataTypes) => {
       Gydytojas.belongsTo(models.Naudotojas, {
         foreignKey: 'naudotojasId',
         as: 'naudotojas'
-      })
+      });
+      Gydytojas.hasMany(models.Zinute, {
+        foreignKey: 'gydytojasId',
+        as: 'zinute'
+      });
+      Gydytojas.hasMany(models.GydytojoDarboLaikas, {
+        foreignKey: 'gydytojasId',
+        as: 'gydytojoDarboLaikas'
+      });
     }
   }
   Gydytojas.init({

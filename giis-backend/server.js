@@ -5,7 +5,7 @@ const db = require('./models')
 
 app.use(cors())
 
-db.sequelize.sync({force: true}).then(async () => {
+db.sequelize.sync({ alter: true }).then(async () => {
     console.log("Database connected")
 
     app.get("/api", (req, res) => {
