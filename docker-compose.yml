@@ -19,6 +19,7 @@ services:
       - giis-app
     volumes:
       - ./giis-backend:/usr/src/app
+      - /usr/src/app/node_modules
   giis.frontend:
     image: giis-frontend
     build:
