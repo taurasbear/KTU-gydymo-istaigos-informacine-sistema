@@ -43,7 +43,7 @@ services:
       MYSQL_USER: stud
       MYSQL_PASSWORD: stud
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - giis-app
     volumes:
