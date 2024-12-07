@@ -24,6 +24,11 @@ module.exports = {
       el_pastas: {
         type: Sequelize.STRING
       },
+      naudotojo_tipas: {
+        type: Sequelize.ENUM,
+        values: ['ADMINISTRATORIUS', 'PACIENTAS', 'GYDYTOJAS'],
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

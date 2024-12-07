@@ -2,15 +2,15 @@
 const {
   Model
 } = require('sequelize');
+const NaudotojoTipas = require('../constants/naudotojoTipas');
+
 module.exports = (sequelize, DataTypes) => {
   class Naudotojas extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Naudotojas.hasOne(models.Gydytojas, {
+        foreignKey: 'naudotojasId',
+        as: 'gydytojas'
+      });
     }
   }
   Naudotojas.init({

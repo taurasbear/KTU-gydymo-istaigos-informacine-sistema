@@ -5,7 +5,7 @@ const db = require('./models')
 
 app.use(cors())
 
-db.sequelize.sync().then(async () => {
+db.sequelize.sync({force: true}).then(async () => {
     console.log("Database connected")
 
     app.get("/api", (req, res) => {
@@ -13,8 +13,13 @@ db.sequelize.sync().then(async () => {
     })
 
     app.get("/api/users", async (req, res) => {
-        const users = await db.Naudotojas.findAll()
-        res.json(users)
+        await db.Naudotojas.findAll().then(users => {
+            res.json(users)
+        }
+        ).catch(err => {
+            console.error(err)
+            res.status(500).json({ message: "Error occurred" })
+        })
     })
 
     app.listen(5000, () => { console.log("Server started on port 5000") })
