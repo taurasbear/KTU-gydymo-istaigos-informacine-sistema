@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
     el_pastas: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    naudotojo_tipas: {
+      type: DataTypes.ENUM,
+      values: Object.values(NaudotojoTipas),
+      allowNull: false
     }
   }, {
     sequelize,
