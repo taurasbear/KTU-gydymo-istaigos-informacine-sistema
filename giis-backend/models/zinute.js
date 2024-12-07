@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class Zinute extends Model {
     static associate(models) {
       Zinute.belongsTo(models.Naudotojas, {
-        foreignKey: 'naudotojasId',
+        foreignKey: 'naudotojas_id',
         as: 'naudotojas'
       });
       Zinute.belongsTo(models.Gydytojas, {
-        foreignKey: 'gydytojasId',
+        foreignKey: 'gydytojas_id',
         as: 'gydytojas'
       });
     }
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    naudotojasId: {
+    naudotojas_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Naudotojas',
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       allowNull: false
     },
-    gydytojasId: {
+    gydytojas_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Gydytojas',
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Zinute',
-    tableName: 'Zinute',
+    //tableName: 'zinute',
   });
   return Zinute;
 };

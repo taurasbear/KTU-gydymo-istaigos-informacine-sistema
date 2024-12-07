@@ -6,23 +6,23 @@ module.exports = (sequelize, DataTypes) => {
   class Rezervacija extends Model {
     static associate(models) {
       Rezervacija.belongsTo(models.Naudotojas, {
-        foreignKey: 'naudotojasId'
+        foreignKey: 'naudotojas_id'
       });
       Rezervacija.belongsTo(models.GydytojoDarboLaikas, {
-        foreignKey: 'gydytojoDarboLaikasId'
+        foreignKey: 'gydytojo_darbo_laikas_id'
       });
     }
   }
   Rezervacija.init({
-    nuoKada: {
+    nuo_kada: {
       type: DataTypes.DATE,
       allowNull: false
     },
-    ikiKada: {
+    iki_kada: {
       type: DataTypes.DATE,
       allowNull: false
     },
-    naudotojasId: {
+    naudotojas_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    gydytojoDarboLaikasId: {
+    gydytojo_darbo_laikas_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Rezervacija',
+    //tableName: 'rezervacija',
   });
   return Rezervacija;
 };

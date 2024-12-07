@@ -9,23 +9,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      nuoKada: {
+      nuo_kada: {
         type: Sequelize.DATE
       },
-      ikiKada: {
+      iki_kada: {
         type: Sequelize.DATE
       },
-      naudotojasId: {
+      naudotojas_id: {
         type: Sequelize.INTEGER
       },
-      gydytojoDarboLaikasId: {
+      gydytojo_darbo_laikas_id: {
         type: Sequelize.INTEGER
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

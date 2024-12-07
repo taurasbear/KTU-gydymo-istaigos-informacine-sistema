@@ -6,16 +6,16 @@ module.exports = (sequelize, DataTypes) => {
   class Gydytojas extends Model {
     static associate(models) {
       Gydytojas.belongsTo(models.Naudotojas, {
-        foreignKey: 'naudotojasId',
+        foreignKey: 'naudotojas_id',
         as: 'naudotojas'
       });
       Gydytojas.hasMany(models.Zinute, {
-        foreignKey: 'gydytojasId',
+        foreignKey: 'gydytojas_id',
         as: 'zinute'
       });
       Gydytojas.hasMany(models.GydytojoDarboLaikas, {
-        foreignKey: 'gydytojasId',
-        as: 'gydytojoDarboLaikas'
+        foreignKey: 'gydytojas_id',
+        as: 'gydytojo_darbo_laikas'
       });
     }
   }
@@ -24,14 +24,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    naudotojasId: {
+    naudotojas_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: true,
+      references: {
+        model: 'Naudotojas',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
     modelName: 'Gydytojas',
+    //tableName: 'gydytojas',
   });
   return Gydytojas;
 };

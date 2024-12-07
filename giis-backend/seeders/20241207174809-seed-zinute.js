@@ -6,15 +6,15 @@ module.exports = {
     await queryInterface.bulkInsert('Zinute', [
       {
         turinys: 'First message content',
-        naudotojasId: 1,
-        gydytojasId: 1,
+        naudotojas_id: 1,
+        gydytojas_id: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         turinys: 'Second message content',
-        naudotojasId: 2,
-        gydytojasId: 2,
+        naudotojas_id: 2,
+        gydytojas_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }

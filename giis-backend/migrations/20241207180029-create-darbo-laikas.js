@@ -12,17 +12,17 @@ module.exports = {
       data: {
         type: Sequelize.DATE
       },
-      nuoKada: {
+      nuo_kada: {
         type: Sequelize.DATE
       },
-      ikiKada: {
+      iki_kada: {
         type: Sequelize.DATE
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class DarboLaikas extends Model {
     static associate(models) {
       DarboLaikas.hasMany(models.GydytojoDarboLaikas, {
-        foreignKey: 'darboLaikasId'
+        foreignKey: 'darbo_laikas_id',
+        as: 'gydytojo_darbo_laikas'
       });
     }
   }
@@ -15,17 +16,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    nuoKada: {
+    nuo_kada: {
       type: DataTypes.DATE,
       allowNull: false
     },
-    ikiKada: {
+    iki_kada: {
       type: DataTypes.DATE,
       allowNull: false
     },
   }, {
     sequelize,
     modelName: 'DarboLaikas',
+    //tableName: 'darbo_laikas'
   });
   return DarboLaikas;
 };

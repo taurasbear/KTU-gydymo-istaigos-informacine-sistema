@@ -6,19 +6,19 @@ module.exports = {
     return queryInterface.bulkInsert('Gydytojas', [
       {
         occupation: 'Cardiologist',
-        naudotojasId: 1,
+        naudotojas_id: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         occupation: 'Dermatologist',
-        naudotojasId: 2,
+        naudotojas_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         occupation: 'Neurologist',
-        naudotojasId: 3,
+        naudotojas_id: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       }

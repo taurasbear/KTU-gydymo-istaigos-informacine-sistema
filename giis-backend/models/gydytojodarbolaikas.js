@@ -6,18 +6,21 @@ module.exports = (sequelize, DataTypes) => {
   class GydytojoDarboLaikas extends Model {
     static associate(models) {
       GydytojoDarboLaikas.hasMany(models.Rezervacija, {
-        foreignKey: 'gydytojoDarboLaikasId'
+        foreignKey: 'gydytojo_darbo_laikas_id',
+        as: 'rezervacija'
       });
       GydytojoDarboLaikas.belongsTo(models.Gydytojas, {
-        foreignKey: 'gydytojasId'
+        foreignKey: 'gydytojas_id',
+        as: 'gydytojas'
       });
       GydytojoDarboLaikas.belongsTo(models.DarboLaikas, {
-        foreignKey: 'darboLaikasId'
+        foreignKey: 'darbo_laikas_id',
+        as: 'darbo_laikas'
       });
     }
   }
   GydytojoDarboLaikas.init({
-    gydytojasId: {
+    gydytojas_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -25,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    darboLaikasId: {
+    darbo_laikas_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -36,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'GydytojoDarboLaikas',
+    //tableName: 'gydytojo_darbo_laikas',
   });
   return GydytojoDarboLaikas;
 };

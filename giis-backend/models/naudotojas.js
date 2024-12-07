@@ -8,15 +8,15 @@ module.exports = (sequelize, DataTypes) => {
   class Naudotojas extends Model {
     static associate(models) {
       Naudotojas.hasOne(models.Gydytojas, {
-        foreignKey: 'naudotojasId',
+        foreignKey: 'naudotojas_id',
         as: 'gydytojas'
       });
       Naudotojas.hasMany(models.Zinute, {
-        foreignKey: 'naudotojasId',
+        foreignKey: 'naudotojas_id',
         as: 'zinute'
       });
       Naudotojas.hasMany(models.Rezervacija, {
-        foreignKey: 'naudotojasId',
+        foreignKey: 'naudotojas_id',
         as: 'rezervacija'
       });
     }
@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Naudotojas',
+    //tableName: 'naudotojas'
   });
   return Naudotojas;
 };

@@ -1,5 +1,7 @@
 'use strict';
 
+const NaudotojoTipas = require('../constants/naudotojoTipas');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Naudotojas', [
@@ -9,6 +11,7 @@ module.exports = {
         vardas: 'Tauras',
         pavarde: 'Pavardenis',
         el_pastas: 'tauras@example.com',
+        naudotojo_tipas: NaudotojoTipas.GYDYTOJAS,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -18,6 +21,7 @@ module.exports = {
         vardas: 'Emilis',
         pavarde: 'Pavardenis',
         el_pastas: 'emilis@example.com',
+        naudotojo_tipas: NaudotojoTipas.GYDYTOJAS,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,6 +31,7 @@ module.exports = {
         vardas: 'Gabija',
         pavarde: 'Pavardenis',
         el_pastas: 'gabija@example.com',
+        naudotojo_tipas: NaudotojoTipas.GYDYTOJAS,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -36,6 +41,7 @@ module.exports = {
         vardas: 'Eva',
         pavarde: 'Pavardenis',
         el_pastas: 'eva@example.com',
+        naudotojo_tipas: NaudotojoTipas.PACIENTAS,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -45,6 +51,7 @@ module.exports = {
         vardas: 'Karolis',
         pavarde: 'Pavardenis',
         el_pastas: 'karolis@example.com',
+        naudotojo_tipas: NaudotojoTipas.PACIENTAS,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -54,6 +61,7 @@ module.exports = {
         vardas: 'Ignas',
         pavarde: 'Pavardenis',
         el_pastas: 'ignas@example.com',
+        naudotojo_tipas: NaudotojoTipas.PACIENTAS,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -63,6 +71,7 @@ module.exports = {
         vardas: 'Liudas',
         pavarde: 'Pavardenis',
         el_pastas: 'liudas@example.com',
+        naudotojo_tipas: NaudotojoTipas.ADMINISTRATORIUS,
         createdAt: new Date(),
         updatedAt: new Date()
       }
