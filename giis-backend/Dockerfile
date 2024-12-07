@@ -10,6 +10,8 @@ COPY package*.json ./
 # Install any needed packages
 RUN npm install --only=development
 
+RUN chmod +x ./node_modules/.bin/nodemon
+
 # Copy the rest of the application code
 COPY . .
 
