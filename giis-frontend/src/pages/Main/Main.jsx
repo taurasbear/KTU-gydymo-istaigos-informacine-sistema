@@ -7,7 +7,7 @@ const Main = () => {
 
     const navigate = useNavigate();
 
-    const { data, isPending, error } = useFetch("/api");
+    const { data, isPending, error } = useFetch("/api/users");
 
     const handleLogin = () => {
         navigate('/login');
@@ -49,9 +49,9 @@ const Main = () => {
             <Button onClick={handleRegisterDoctorTimetable}>Register Doctor Timetable</Button>
             {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>}
-            {data?.users.map((item) => (
-                <div key={item}>
-                    <h2>{item}</h2>
+            {data?.map((item) => (
+                <div key={item.id}>
+                    <h2>{item.el_pastas}</h2>
                 </div>
             ))}
         </div>
