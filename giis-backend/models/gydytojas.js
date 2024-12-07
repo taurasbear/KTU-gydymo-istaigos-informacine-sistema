@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Gydytojas.init({
-    occupation: {
+    specialybe: {
       type: DataTypes.STRING,
       allowNull: false
     },
