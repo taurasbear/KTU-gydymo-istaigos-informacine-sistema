@@ -24,7 +24,7 @@ function App() {
           <Route path="/bookappointment" element={<BookAppointment />} />
           <Route path="/appointments" element={<Appointments />} />
 
-          <Route element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS" />}>
+          <Route element={<ProtectedRoute requiredUserType="GYDYTOJAS" />}>
             <Route path="/registerdoctor" element={<RegisterDoctor />} />
           </Route>
           {/* <Route path="/registerdoctor" element={<RegisterDoctor />} /> */}

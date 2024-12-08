@@ -7,22 +7,38 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { postData } from '../../util/apiCalls';
+import AuthContext from '../../context/AuthContext';
+import { useContext } from 'react';
 
 const validationSchema = yup.object({
-    email: yup.string().email('Invalid email address').required('Email is required'),
-    password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+    username: yup.string().required('Username is required'),
+    password: yup.string().min(3, 'Password must be at least 3 characters').required('Password is required'),
 });
 
 const Login = () => {
+
+    // const { user } = useContext(AuthContext);
+    // console.log('user in protected route:', user);
+
     const navigate = useNavigate();
 
     const handleMain = () => {
         navigate('/');
     };
 
-    const handleSubmit = (values) => {
-        // Handle form submission logic here
-        console.log(values);
+    const handleSubmit = async (values) => {
+        try {
+            console.log('Login values:', values);
+            const response = await postData('/api/login', {
+                username: values.username,
+                password: values.password,
+            });
+            console.log(response);
+            navigate('/');
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
     };
 
     return (
@@ -40,7 +56,7 @@ const Login = () => {
                 </Typography>
                 <Formik
                     initialValues={{
-                        email: '',
+                        username: '',
                         password: '',
                     }}
                     validationSchema={validationSchema}
@@ -52,13 +68,13 @@ const Login = () => {
                                 as={TextField}
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="username"
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
                                 margin="normal"
-                                helperText={touched.email && errors.email ? errors.email : ''}
-                                error={touched.email && Boolean(errors.email)}
+                                helperText={touched.username && errors.username ? errors.username : ''}
+                                error={touched.username && Boolean(errors.username)}
                             />
                             <Field
                                 as={TextField}

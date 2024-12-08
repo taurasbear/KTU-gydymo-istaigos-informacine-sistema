@@ -8,9 +8,12 @@ const naudotojasRouter = require('./routes/naudotojasRouter');
 const gydytojasRouter = require('./routes/gydytojasRouter');
 const authenticateRouter = require('./routes/authenticateRouter')
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
-app.use(express.json())
+app.use(express.json());
 
 app.use(session({
     secret: 'secret_key',

@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 const ProtectedRoute = ({ requiredUserType }) => {
     const { user } = useContext(AuthContext);
 
-    if (!user || user.type !== requiredUserType) {
+    if (!user || user.naudotojo_tipas !== requiredUserType) {
         return <Navigate to="/login" />;
     }
 

@@ -5,6 +5,7 @@ const db = require('./models');
 
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
+    console.log('----> LocalStrategy:', username, password);
     const user = await db.Naudotojas.findOne({ where: { prisijungimo_vardas: username } });
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });

@@ -7,16 +7,20 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetchData('/user', setUser);
+    fetchData('/api/user', (data) => {
+      if (data) {
+        setUser(data);
+      }
+    });
   }, []);
 
   const login = async (username, password) => {
-    const response = await postData('/login', { username, password });
+    const response = await postData('/api/login', { username, password });
     setUser(response.data);
   };
 
   const logout = async () => {
-    await fetchData('/logout', () => setUser(null));
+    await fetchData('/api/logout', () => setUser(null));
   };
 
   return (
