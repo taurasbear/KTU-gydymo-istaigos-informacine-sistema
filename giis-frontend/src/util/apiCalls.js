@@ -12,6 +12,23 @@ export const fetchData = async (endpoint, callback) => {
     }
 };
 
+export const fetchDataWithPayload = async (endpoint, payload, callback) => {
+    try {
+        const response = await fetch(backendUrl + endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+            credentials: 'include'
+        });
+        const data = await response.json();
+        callback(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
+
 export const postData = async (endpoint, payload) => {
     try {
         const response = await fetch(backendUrl + endpoint, {

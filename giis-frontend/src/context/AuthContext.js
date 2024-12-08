@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error('Error logging in:', error);
       setUser(null);
+      throw error;
     }
   };
 

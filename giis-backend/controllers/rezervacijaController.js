@@ -1,6 +1,6 @@
 const db = require('../models');
 
-exports.getAllReservationsByUserId = async (req, res) => {
+exports.getAllRezervacijaByUserId = async (req, res) => {
     const userId = req.params.userId;
 
     try {
@@ -32,4 +32,23 @@ exports.getAllReservationsByUserId = async (req, res) => {
         console.error(err);
         res.status(500).json({ message: "Error occurred" });
     }
+};
+
+exports.createRezervacija = async (req, res) => {
+    const { nuo_kada, iki_kada, gydytojo_darbo_laikas_id, naudotojas_id } = req.body;
+
+    try {
+        const rezervacija = await db.Rezervacija.create({
+            nuo_kada,
+            iki_kada,
+            gydytojo_darbo_laikas_id,
+            naudotojas_id
+        });
+
+        res.json(rezervacija);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error occurred" });
+    }
+
 };
