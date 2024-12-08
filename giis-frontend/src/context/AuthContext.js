@@ -27,7 +27,23 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await fetchData('/api/logout', () => setUser(null));
+    try {
+      const response = await fetch('http://localhost:5000/api/logout', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        setUser(null);
+      } else {
+        console.error('Error logging out:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (

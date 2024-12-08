@@ -9,6 +9,7 @@ const gydytojasRouter = require('./routes/gydytojasRouter');
 const authenticateRouter = require('./routes/authenticateRouter')
 const darboLaikasRouter = require('./routes/darboLaikasRouter')
 const gydytojoDarboLaikasRouter = require('./routes/gydytojoDarboLaikasRouter')
+const rezervacijaRouter = require('./routes/rezervacijaRouter');
 
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -34,6 +35,7 @@ db.sequelize.sync({ force: true }).then(async () => {
     app.use('/api', authenticateRouter);
     app.use('/api', darboLaikasRouter);
     app.use('/api', gydytojoDarboLaikasRouter);
+    app.use('/api', rezervacijaRouter);
 
     app.get("/api/users", async (req, res) => {
         await db.Naudotojas.findAll().then(users => {

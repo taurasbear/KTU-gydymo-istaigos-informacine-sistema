@@ -32,8 +32,12 @@ exports.register = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    req.logout();
-    res.send('Logged out');
+    req.logout((err) => {
+        if (err) {
+            return res.status(500).json({ message: "Error occurred during logout" });
+        }
+        res.send('Logged out');
+    });
 };
 
 exports.getUser = (req, res) => {

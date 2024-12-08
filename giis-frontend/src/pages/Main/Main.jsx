@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 const Main = () => {
 
     const navigate = useNavigate();
-    const { user, loading} = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
     const isAuthenticated = user && !user.message;
     const { data, isPending, error } = useFetch("/api/users");
+    const { logout } = useContext(AuthContext);
 
     const handleLogin = () => {
         navigate('/login');
@@ -18,6 +19,11 @@ const Main = () => {
 
     const handleRegister = () => {
         navigate('/register');
+    }
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/login');
     }
 
     const handleMessages = () => {
@@ -41,17 +47,18 @@ const Main = () => {
     }
 
     if (loading) {
-        return <div>Loading...</div>; 
+        return <div>Loading...</div>;
     }
 
     return (
         <div>
             <Typography component="h1" variant="h5">Pagrindinis puslapis</Typography>
-            <Button onClick={handleLogin}>Prisijungti</Button>
-            <Button onClick={handleRegister}>Registruotis</Button>
-            {isAuthenticated && <Button onClick={handleMessages}>Žinutės</Button>}
-            {isAuthenticated && <Button onClick={handleBookAppointment}>Užsirašyti pas gydytoją</Button>}
-            {isAuthenticated && <Button onClick={handleAppointments}>Rezervacijos</Button>}
+            {!isAuthenticated && <Button onClick={handleLogin}>Prisijungti</Button>}
+            {!isAuthenticated && <Button onClick={handleRegister}>Registruotis</Button>}
+            {isAuthenticated && <Button onClick={handleLogout}>Atsijungti</Button>}
+            {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleMessages}>Žinutės</Button>}
+            {user?.naudotojo_tipas === "PACIENTAS" && <Button onClick={handleBookAppointment}>Užsirašyti pas gydytoją</Button>}
+            {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleAppointments}>Rezervacijos</Button>}
             {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctor}>Registruoti gydytoją</Button>}
             {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctorTimetable}>Registruoti gydytojų tvarkaraštį</Button>}
             {error && <div>{error}</div>}
