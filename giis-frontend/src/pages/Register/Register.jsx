@@ -7,12 +7,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { postData } from '../../util/apiCalls';
 
 const validationSchema = yup.object({
+    username: yup.string().required('Username is required'),
     firstName: yup.string().required('First Name is required'),
     lastName: yup.string().required('Last Name is required'),
     email: yup.string().email('Invalid email address').required('Email is required'),
-    password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
+    password: yup.string().min(3, 'Password must be at least 3 characters').required('Password is required'),
 });
 
 const Register = () => {
@@ -22,9 +24,14 @@ const Register = () => {
         navigate('/');
     };
 
-    const handleSubmit = (values) => {
-        // Handle form submission logic here
-        console.log(values);
+    const handleSubmit = async (values) => {
+        try {
+            const response = await postData('/api/register', values);
+            console.log(response);
+            navigate('/login');
+        } catch (error) {
+            console.error('Error registering:', error);
+        }
     };
 
     return (
@@ -38,10 +45,11 @@ const Register = () => {
                 }}
             >
                 <Typography component="h1" variant="h5">
-                    Register
+                    Registracija
                 </Typography>
                 <Formik
                     initialValues={{
+                        username: '',
                         firstName: '',
                         lastName: '',
                         email: '',
@@ -54,12 +62,24 @@ const Register = () => {
                         <Form>
                             <Field
                                 as={TextField}
+                                required
+                                fullWidth
+                                id="username"
+                                label="Prisijungimo vardas"
+                                name="username"
+                                autoComplete="username"
+                                margin="normal"
+                                helperText={touched.username && errors.username ? errors.username : ''}
+                                error={touched.username && Boolean(errors.username)}
+                            />
+                            <Field
+                                as={TextField}
                                 autoComplete="given-name"
                                 name="firstName"
                                 required
                                 fullWidth
                                 id="firstName"
-                                label="First Name"
+                                label="Vardas"
                                 margin="normal"
                                 helperText={touched.firstName && errors.firstName ? errors.firstName : ''}
                                 error={touched.firstName && Boolean(errors.firstName)}
@@ -69,7 +89,7 @@ const Register = () => {
                                 required
                                 fullWidth
                                 id="lastName"
-                                label="Last Name"
+                                label="Pavardė"
                                 name="lastName"
                                 autoComplete="family-name"
                                 margin="normal"
@@ -81,7 +101,7 @@ const Register = () => {
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="El. paštas"
                                 name="email"
                                 autoComplete="email"
                                 margin="normal"
@@ -93,7 +113,7 @@ const Register = () => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Slaptažodis"
                                 type="password"
                                 id="password"
                                 autoComplete="new-password"
@@ -119,7 +139,7 @@ const Register = () => {
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleMain}
                 >
-                    Main Menu
+                    Pagrindinis puslapis
                 </Button>
             </Box>
         </Container>

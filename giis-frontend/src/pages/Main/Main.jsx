@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useFetch } from '../../hooks/useFetch';
+import { hasPermission } from '../../util/hasPermission';
+import AuthContext from '../../context/AuthContext';
+import Typography from '@mui/material/Typography';
 
 const Main = () => {
 
     const navigate = useNavigate();
-
+    const { user } = useContext(AuthContext);
+    const isAuthenticated = user && !user.message;
     const { data, isPending, error } = useFetch("/api/users");
 
     const handleLogin = () => {
@@ -36,17 +40,17 @@ const Main = () => {
     const handleRegisterDoctorTimetable = () => {
         navigate('/registerdoctortimetable');
     }
-
+    console.log('user', user);
     return (
         <div>
-            <h1>Main</h1>
-            <Button onClick={handleLogin}>Login</Button>
-            <Button onClick={handleRegister}>Register</Button>
-            <Button onClick={handleMessages}>Messages</Button>
-            <Button onClick={handleBookAppointment}>Book Appointment</Button>
-            <Button onClick={handleAppointments}>Appointments</Button>
-            <Button onClick={handleRegisterDoctor}>Register Doctor</Button>
-            <Button onClick={handleRegisterDoctorTimetable}>Register Doctor Timetable</Button>
+            <Typography component="h1" variant="h5">Pagrindinis puslapis</Typography>
+            <Button onClick={handleLogin}>Prisijungti</Button>
+            <Button onClick={handleRegister}>Registruotis</Button>
+            {isAuthenticated && <Button onClick={handleMessages}>Žinutės</Button>}
+            {isAuthenticated && <Button onClick={handleBookAppointment}>Užsirašyti pas gydytoją</Button>}
+            {isAuthenticated && <Button onClick={handleAppointments}>Rezervacijos</Button>}
+            {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctor}>Registruoti gydytoją</Button>}
+            {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctorTimetable}>Registruoti gydytojų tvarkaraštį</Button>}
             {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>}
             {data?.map((item) => (

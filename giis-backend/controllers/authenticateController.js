@@ -14,16 +14,16 @@ exports.login = (req, res, next) => {
 };
 
 exports.register = async (req, res) => {
-    const { username, password, vardas, pavarde, el_pastas } = req.body;
+    const { username, password, firstName, lastName, email } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 10);
     try {
         const user = await db.Naudotojas.create({
             prisijungimo_vardas: username,
             slaptazodis: hashedPassword,
             naudotojo_tipas: 'PACIENTAS',
-            vardas,
-            pavarde,
-            el_pastas,
+            vardas: firstName,
+            pavarde: lastName,
+            el_pastas: email,
         });
         res.json(user);
     } catch (err) {

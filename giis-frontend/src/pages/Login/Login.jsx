@@ -8,8 +8,6 @@ import Typography from '@mui/material/Typography';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { postData } from '../../util/apiCalls';
-import AuthContext from '../../context/AuthContext';
-import { useContext } from 'react';
 
 const validationSchema = yup.object({
     username: yup.string().required('Username is required'),
@@ -17,9 +15,6 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-
-    // const { user } = useContext(AuthContext);
-    // console.log('user in protected route:', user);
 
     const navigate = useNavigate();
 
@@ -29,7 +24,6 @@ const Login = () => {
 
     const handleSubmit = async (values) => {
         try {
-            console.log('Login values:', values);
             const response = await postData('/api/login', {
                 username: values.username,
                 password: values.password,
@@ -52,7 +46,7 @@ const Login = () => {
                 }}
             >
                 <Typography component="h1" variant="h5">
-                    Login
+                    Prisijungimo puslapis
                 </Typography>
                 <Formik
                     initialValues={{
@@ -69,7 +63,7 @@ const Login = () => {
                                 required
                                 fullWidth
                                 id="username"
-                                label="Username"
+                                label="Prisijungimo vardas"
                                 name="username"
                                 autoComplete="username"
                                 margin="normal"
@@ -81,7 +75,7 @@ const Login = () => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Slaptažodis"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -96,7 +90,7 @@ const Login = () => {
                                 sx={{ mt: 3, mb: 2 }}
                                 disabled={isSubmitting}
                             >
-                                Login
+                                Prisijungti
                             </Button>
                         </Form>
                     )}
@@ -107,7 +101,7 @@ const Login = () => {
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleMain}
                 >
-                    Main Menu
+                    Pagrindinis puslapis
                 </Button>
             </Box>
         </Container>
