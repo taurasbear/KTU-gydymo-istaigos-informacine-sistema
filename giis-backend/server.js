@@ -1,13 +1,25 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
-const db = require('./models')
-const naudotojasRouter = require('./routes/naudotojasRouter')
-const gydytojasRouter = require('./routes/gydytojasRouter')
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const passport = require('./passport');
+const app = express();
+const db = require('./models');
+const naudotojasRouter = require('./routes/naudotojasRouter');
+const gydytojasRouter = require('./routes/gydytojasRouter');
+const authenticateRouter = require('./routes/authenticateRouter')
 
 app.use(cors())
 
 app.use(express.json())
+
+app.use(session({
+    secret: 'secret_key',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 db.sequelize.sync({ force: true }).then(async () => {
     console.log("Database connected")
@@ -15,9 +27,10 @@ db.sequelize.sync({ force: true }).then(async () => {
     app.get("/api", (req, res) => {
         res.json({ "users": ["tauras", "emilis", "gabija", "eva", "karolis", "ignas", "liudas"] })
     })
-    
+
     app.use('/api', naudotojasRouter);
     app.use('/api', gydytojasRouter);
+    app.use('/api', authenticateRouter);
 
     app.get("/api/users", async (req, res) => {
         await db.Naudotojas.findAll().then(users => {
