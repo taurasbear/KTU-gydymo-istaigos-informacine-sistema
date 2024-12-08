@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { useFetch } from '../../hooks/useFetch';
+import { postData } from '../../util/apiCalls';
+import dayjs from 'dayjs';
 
 const RegisterDoctorTimetable = () => {
     const navigate = useNavigate();
@@ -13,68 +15,63 @@ const RegisterDoctorTimetable = () => {
     const [selectedDoctor, setSelectedDoctor] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTimeRange, setSelectedTimeRange] = useState('');
+    const [dates, setDates] = useState([]);
 
-    const { data: doctors, loading: doctorsLoading, error: doctorsError } = useFetch('/api/doctors');
-    // disabled until doctor selected
-    //const { data: dates, loading: datesLoading, error: datesError } = useFetch('/api/dates');
-    // disabled until date selected
-    //const { data: timeRanges, loading: timeRangesLoading, error: timeRangesError } = useFetch('/api/timeRanges');
 
-    // const doctors = ['Dr. Smith', 'Dr. Johnson', 'Dr. Williams'];
-    const dates = ['2023-10-01', '2023-10-02', '2023-10-03'];
-    const timeRanges = ['09:00-11:00', '11:00-13:00', '13:00-15:00'];
+    const { data: doctors, loading: doctorsLoading, error: doctorsError } = useFetch('/api/gydytojas');
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         // Handle form submission
         console.log({ doctor: selectedDoctor, date: selectedDate, timeRange: selectedTimeRange });
+        try {
+            const response = await postData(`/api/gydytojodarbolaikas?gydytojasId=${selectedDoctor.id}&darboLaikasId=${selectedDate.id}`);
+        }
+        catch (error) {
+            console.error('Error registering doctor timetable:', error);
+        }
     }
 
-    // useEffect(() => {
-    //     // Fetch data
-    // }, []);
+    const onDoctorChange = async (e) => {
+        setSelectedDoctor(e.target.value);
+        try {
+            const response = await postData(`/api/darbolaikas/${e.target.value.id}`);
+            setDates(response);
+            console.log('dates', response);
+        } catch (error) {
+            console.error('Error fetching dates:', error);
+        }
+    }
 
     return (
         <div>
             <h1>Register Doctor Timetable</h1>
             <FormControl fullWidth margin="normal">
-                <InputLabel id="doctor-label">Select Doctor</InputLabel>
+                <InputLabel id="doctor-label">Pasirinkite gydytoją</InputLabel>
                 <Select
                     labelId="doctor-label"
                     value={selectedDoctor}
-                    onChange={(e) => setSelectedDoctor(e.target.value)}
+                    onChange={(e) => onDoctorChange(e)}
 
                 >
-                    {doctors.map((doc) => (
-                        <MenuItem key={doc} value={doc}>{doc}</MenuItem>
+                    {doctors?.map((doc) => (
+                        <MenuItem key={doc.id} value={doc}>{doc.specialybe} {doc.naudotojas.vardas} {doc.naudotojas.pavarde}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
             <FormControl fullWidth margin="normal" disabled={!selectedDoctor}>
-                <InputLabel id="date-label">Select Date</InputLabel>
+                <InputLabel id="date-label">Pasirinkite darbo laiką</InputLabel>
                 <Select
                     labelId="date-label"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                 >
-                    {dates.map((d) => (
-                        <MenuItem key={d} value={d}>{d}</MenuItem>
+                    {dates?.map((d) => (
+                        <MenuItem key={d.id} value={d}>{dayjs(d.data).format('YYYY-MM-DD')} {dayjs(d.nuo_kada).format('HH:mm')}-{dayjs(d.iki_kada).format('HH:mm')}</MenuItem>
                     ))}
                 </Select>
             </FormControl>
-            <FormControl fullWidth margin="normal" disabled={!selectedDate}>
-                <InputLabel id="time-range-label">Select Time Range</InputLabel>
-                <Select
-                    labelId="time-range-label"
-                    value={selectedTimeRange}
-                    onChange={(e) => setSelectedTimeRange(e.target.value)}
-                >
-                    {timeRanges.map((tr) => (
-                        <MenuItem key={tr} value={tr}>{tr}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <Button onClick={handleSubmit} variant="contained" color="primary">Submit</Button>
-            <Button onClick={handleMain} variant="outlined" color="secondary">Main Menu</Button>
+            <Button onClick={handleSubmit} variant="contained" color="primary">Sukurti</Button>
+            <Button onClick={handleMain} variant="outlined" color="secondary">Pagrindinis puslapis</Button>
         </div>
     );
 }

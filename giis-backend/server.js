@@ -7,6 +7,8 @@ const db = require('./models');
 const naudotojasRouter = require('./routes/naudotojasRouter');
 const gydytojasRouter = require('./routes/gydytojasRouter');
 const authenticateRouter = require('./routes/authenticateRouter')
+const darboLaikasRouter = require('./routes/darboLaikasRouter')
+const gydytojoDarboLaikasRouter = require('./routes/gydytojoDarboLaikasRouter')
 
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -27,13 +29,11 @@ app.use(passport.session());
 db.sequelize.sync({ force: true }).then(async () => {
     console.log("Database connected")
 
-    app.get("/api", (req, res) => {
-        res.json({ "users": ["tauras", "emilis", "gabija", "eva", "karolis", "ignas", "liudas"] })
-    })
-
     app.use('/api', naudotojasRouter);
     app.use('/api', gydytojasRouter);
     app.use('/api', authenticateRouter);
+    app.use('/api', darboLaikasRouter);
+    app.use('/api', gydytojoDarboLaikasRouter);
 
     app.get("/api/users", async (req, res) => {
         await db.Naudotojas.findAll().then(users => {

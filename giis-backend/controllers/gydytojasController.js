@@ -24,3 +24,28 @@ exports.addGydytojas = async (req, res) => {
         res.status(500).json({ message: "Error occurred" });
     }
 }
+
+exports.getAllGydytojas = async (req, res) => {
+    try {
+        const gydytojai = await db.Gydytojas.findAll();
+        let fullGydytojai = [];
+        for (let gydytojas of gydytojai) {
+            const naudotojas = await db.Naudotojas.findByPk(gydytojas.naudotojas_id);
+            fullGydytojai.push({
+                id: gydytojas.id,
+                specialybe: gydytojas.specialybe,
+                naudotojas: {
+                    id: naudotojas.id,
+                    vardas: naudotojas.vardas,
+                    pavarde: naudotojas.pavarde,
+                    el_pastas: naudotojas.el_pastas,
+                    naudotojo_tipas: naudotojas.naudotojo_tipas
+                }
+            });
+        }
+        res.json(fullGydytojai);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error occurred" });
+    }
+}
