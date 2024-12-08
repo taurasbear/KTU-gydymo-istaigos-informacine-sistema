@@ -8,7 +8,7 @@ exports.login = (req, res, next) => {
         if (!user) return res.status(400).json({ message: info.message });
         req.logIn(user, (err) => {
             if (err) return next(err);
-            return res.json(user);
+            return res.json(user.toJSON());
         });
     })(req, res, next);
 };
@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
             pavarde: lastName,
             el_pastas: email,
         });
-        res.json(user);
+        res.json(user.toJSON());
     } catch (err) {
         res.status(500).send(err);
     }

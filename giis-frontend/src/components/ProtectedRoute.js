@@ -4,7 +4,9 @@ import AuthContext from '../context/AuthContext';
 
 const ProtectedRoute = ({ requiredUserType }) => {
     const { user } = useContext(AuthContext);
-    console.log(user);
+    //console.log("ProtectedRoute >", user);
+    console.log("ProtectedRoute > requiredUserType", requiredUserType);
+    console.log("ProtectedRoute > user.naudotojo_tipas", user.naudotojo_tipas);
     if (!user) {
         return <Navigate to="/login" />;
     }

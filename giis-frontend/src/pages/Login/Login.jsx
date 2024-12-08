@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { postData } from '../../util/apiCalls';
+import AuthContext from '../../context/AuthContext';
 
 const validationSchema = yup.object({
     username: yup.string().required('Username is required'),
@@ -17,6 +18,7 @@ const validationSchema = yup.object({
 const Login = () => {
 
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleMain = () => {
         navigate('/');
@@ -24,11 +26,7 @@ const Login = () => {
 
     const handleSubmit = async (values) => {
         try {
-            const response = await postData('/api/login', {
-                username: values.username,
-                password: values.password,
-            });
-            console.log(response);
+            await login(values.username, values.password);
             navigate('/');
         } catch (error) {
             console.error('Error logging in:', error);

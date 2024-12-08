@@ -2,14 +2,13 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useFetch } from '../../hooks/useFetch';
-import { hasPermission } from '../../util/hasPermission';
 import AuthContext from '../../context/AuthContext';
 import Typography from '@mui/material/Typography';
 
 const Main = () => {
 
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const { user, loading} = useContext(AuthContext);
     const isAuthenticated = user && !user.message;
     const { data, isPending, error } = useFetch("/api/users");
 
@@ -40,7 +39,11 @@ const Main = () => {
     const handleRegisterDoctorTimetable = () => {
         navigate('/registerdoctortimetable');
     }
-    console.log('user', user);
+
+    if (loading) {
+        return <div>Loading...</div>; 
+    }
+
     return (
         <div>
             <Typography component="h1" variant="h5">Pagrindinis puslapis</Typography>
