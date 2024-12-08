@@ -1,13 +1,18 @@
 'use strict';
 
+const bcrypt = require('bcryptjs');
 const NaudotojoTipas = require('../constants/naudotojoTipas');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const hashPassAdministratorius = bcrypt.hashSync('admin', 10);
+    const hashPassGydytojas = bcrypt.hashSync('gyd', 10);
+    const hashPassPacientas = bcrypt.hashSync('pac', 10);
+
     await queryInterface.bulkInsert('Naudotojas', [
       {
         prisijungimo_vardas: 'tauras',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassGydytojas,
         vardas: 'Tauras',
         pavarde: 'Pavardenis',
         el_pastas: 'tauras@example.com',
@@ -17,7 +22,7 @@ module.exports = {
       },
       {
         prisijungimo_vardas: 'emilis',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassGydytojas,
         vardas: 'Emilis',
         pavarde: 'Pavardenis',
         el_pastas: 'emilis@example.com',
@@ -27,7 +32,7 @@ module.exports = {
       },
       {
         prisijungimo_vardas: 'gabija',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassGydytojas,
         vardas: 'Gabija',
         pavarde: 'Pavardenis',
         el_pastas: 'gabija@example.com',
@@ -37,7 +42,7 @@ module.exports = {
       },
       {
         prisijungimo_vardas: 'eva',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassPacientas,
         vardas: 'Eva',
         pavarde: 'Pavardenis',
         el_pastas: 'eva@example.com',
@@ -47,7 +52,7 @@ module.exports = {
       },
       {
         prisijungimo_vardas: 'karolis',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassPacientas,
         vardas: 'Karolis',
         pavarde: 'Pavardenis',
         el_pastas: 'karolis@example.com',
@@ -57,7 +62,7 @@ module.exports = {
       },
       {
         prisijungimo_vardas: 'ignas',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassPacientas,
         vardas: 'Ignas',
         pavarde: 'Pavardenis',
         el_pastas: 'ignas@example.com',
@@ -67,7 +72,7 @@ module.exports = {
       },
       {
         prisijungimo_vardas: 'liudas',
-        slaptazodis: 'password123',
+        slaptazodis: hashPassAdministratorius,
         vardas: 'Liudas',
         pavarde: 'Pavardenis',
         el_pastas: 'liudas@example.com',
