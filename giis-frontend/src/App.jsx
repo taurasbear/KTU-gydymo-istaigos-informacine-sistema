@@ -18,12 +18,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/messages" element={<ProtectedRoute requiredUserType="PACIENTAS"><Messages /></ProtectedRoute>} />
-          <Route path="/bookappointment" element={<ProtectedRoute requiredUserType="PACIENTAS"><BookAppointment /></ProtectedRoute>} />
-          <Route path="/appointments" element={<ProtectedRoute requiredUserType="GYDYTOJAS"><Appointments /></ProtectedRoute>} />
-          <Route path="/registerdoctor" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS"><RegisterDoctor /></ProtectedRoute>} />
-          <Route path="/registerdoctortimetable" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS"><RegisterDoctorTimetable /></ProtectedRoute>} />
+          <Route path="/register" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS" element={<Register />} />} />
+          <Route path="/messages" element={<ProtectedRoute requiredUserType="PACIENTAS" element={<Messages />} />} />
+          <Route path="/bookappointment" element={<ProtectedRoute requiredUserType="PACIENTAS" element={<BookAppointment />} />} />
+          <Route path="/appointments" element={<ProtectedRoute requiredUserType="GYDYTOJAS" element={<Appointments />} />} />
+          <Route path="/registerdoctor" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS" element={<RegisterDoctor />} />} />
+          <Route path="/registerdoctortimetable" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS" element={<RegisterDoctorTimetable />} />} />
         </Routes>
       </Router>
     </AuthProvider>
