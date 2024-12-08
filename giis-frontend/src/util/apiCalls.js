@@ -2,7 +2,9 @@ const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 export const fetchData = async (endpoint, callback) => {
     try {
-        const response = await fetch(backendUrl + endpoint);
+        const response = await fetch(backendUrl + endpoint, {
+            credentials: 'include'
+        });
         const data = await response.json();
         callback(data);
     } catch (error) {
@@ -17,7 +19,8 @@ export const postData = async (endpoint, payload) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            credentials: 'include'
         })
         const data = await response.json();
 

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchData, postData } from '../util/apiCalls';
 
 const AuthContext = createContext();
 
@@ -7,19 +7,16 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('/user').then(response => {
-      setUser(response.data);
-    });
+    fetchData('/user', setUser);
   }, []);
 
   const login = async (username, password) => {
-    const response = await axios.post('/login', { username, password });
+    const response = await postData('/login', { username, password });
     setUser(response.data);
   };
 
   const logout = async () => {
-    await axios.get('/logout');
-    setUser(null);
+    await fetchData('/logout', () => setUser(null));
   };
 
   return (

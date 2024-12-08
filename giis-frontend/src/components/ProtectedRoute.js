@@ -1,22 +1,15 @@
 import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
-const ProtectedRoute = ({ component: Component, requiredUserType, ...rest }) => {
+const ProtectedRoute = ({ requiredUserType }) => {
     const { user } = useContext(AuthContext);
 
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                user && user.type === requiredUserType ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to="/login" />
-                )
-            }
-        />
-    );
+    if (!user || user.type !== requiredUserType) {
+        return <Navigate to="/login" />;
+    }
+
+    return <Outlet />;
 };
 
 export default ProtectedRoute;
