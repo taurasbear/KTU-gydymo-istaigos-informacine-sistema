@@ -36,7 +36,10 @@ exports.getAllRezervacijaByUserId = async (req, res) => {
 
 exports.createRezervacija = async (req, res) => {
     const { nuo_kada, iki_kada, gydytojo_user_id, naudotojas_id } = req.body;
-
+    console.log('nuo_kada', nuo_kada);
+    console.log('iki_kada', iki_kada);
+    console.log('gydytojo_user_id', gydytojo_user_id);
+    console.log('naudotojas_id', naudotojas_id);
     // Convert nuo_kada and iki_kada to Date objects
     const nuoKadaDate = new Date(nuo_kada);
     const ikiKadaDate = new Date(iki_kada);
@@ -70,7 +73,7 @@ exports.createRezervacija = async (req, res) => {
             nuo_kada: nuoKadaDate,
             iki_kada: ikiKadaDate,
             gydytojo_darbo_laikas_id: gydytojoDarboLaikas.id,
-            naudotojas_id
+            naudotojas_id: gydytojas.id
         });
 
         res.json(rezervacija);
