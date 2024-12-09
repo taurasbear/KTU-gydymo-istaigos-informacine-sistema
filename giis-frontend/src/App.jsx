@@ -5,7 +5,7 @@ import Register from './pages/Register/Register';
 import Messages from './pages/Messages/Messages';
 import ReadMessages from './pages/ReadMessages/ReadMessages';
 import BookAppointment from './pages/BookAppointment/BookAppointment';
-import BookSelfReservation from './pages/BookAppointment/BookSelfReservation';
+import BookSelfReservation from './pages/BookSelfReservation/BookSelfReservation';
 import Appointments from './pages/Appointments/Appointments';
 import RegisterDoctor from './pages/RegisterDoctor/RegisterDoctor';
 import RegisterDoctorTimetable from './pages/RegisterDoctorTimetable/RegisterDoctorTimetable';
