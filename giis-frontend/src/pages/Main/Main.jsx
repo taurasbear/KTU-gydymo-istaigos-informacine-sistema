@@ -38,6 +38,10 @@ const Main = () => {
         navigate('/bookappointment');
     }
 
+    const handleBookSelfReservation = () => {
+        navigate('/bookselfreservation');
+    }
+
     const handleAppointments = () => {
         navigate('/appointments');
     }
@@ -64,6 +68,7 @@ const Main = () => {
             {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleMessages}>Žinutės</Button>}
             {user?.naudotojo_tipas === "PACIENTAS" && <Button onClick={handleReadMessages}>Žinutės</Button>}
             {user?.naudotojo_tipas === "PACIENTAS" && <Button onClick={handleBookAppointment}>Užsirašyti pas gydytoją</Button>}
+            {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleBookSelfReservation}>Užsirašyti pas save</Button>}
             {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleAppointments}>Rezervacijos</Button>}
             {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctor}>Registruoti gydytoją</Button>}
             {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctorTimetable}>Registruoti gydytojų tvarkaraštį</Button>}

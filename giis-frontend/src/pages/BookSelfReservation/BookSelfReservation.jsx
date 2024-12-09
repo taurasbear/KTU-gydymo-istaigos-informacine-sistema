@@ -13,19 +13,16 @@ import AuthContext from '../../context/AuthContext';
 
 
 const validationSchema = yup.object({
-    doctor: yup.string().required('Pasirinkite gydytoją'),
     date: yup.date().required('Pasirinkite datą'),
     time: yup.number().required('Pasirinkite laiką'),
     appointmentLength: yup.number().required('Pasirinkite vizito trukmę').nullable(),
 });
 
-const BookAppointment = () => {
+const BookSelfReservation = () => {
 
     const navigate = useNavigate();
 
     const [startHours, setStartHours] = useState([]);
-    const [selectedDoctor, setSelectedDoctor] = useState('');
-    const { data: doctors, isPending, error } = useFetch('/api/gydytojas');
     const { user } = useContext(AuthContext);
     const handleSubmit = async (values, { resetForm }) => {
         const date = values.date.toDate();
@@ -92,7 +89,7 @@ const BookAppointment = () => {
                 <Typography variant="h6">Rezervacija pas gydytoją</Typography>
                 <Formik
                     initialValues={{
-                        doctor: '',
+                        doctor: user.id,
                         date: null,
                         time: null,
                         appointmentLength: '',
@@ -102,24 +99,6 @@ const BookAppointment = () => {
                 >
                     {({ setFieldValue, values, touched, errors }) => (
                         <Form>
-                            <FormControl margin="normal" sx={{ width: '200px' }}>
-                                <InputLabel id="doctor-label">Pasirinkite gydytoją</InputLabel>
-                                <Field
-                                    as={Select}
-                                    labelId="doctor-label"
-                                    name="doctor"
-                                    value={selectedDoctor}
-                                    onChange={(e) => {
-                                        setFieldValue('doctor', e.target.value);
-                                        setSelectedDoctor(e.target.value);
-                                    }}
-                                >
-                                    {doctors?.map((doc) => (
-                                        <MenuItem key={doc.id} value={doc.naudotojas.id}>{doc.specialybe} {doc.naudotojas.vardas} {doc.naudotojas.pavarde}</MenuItem>
-                                    ))}
-                                </Field>
-                                <ErrorMessage name="doctor" component="div" style={{ color: 'red' }} />
-                            </FormControl>
                             <DatePicker
                                 label="Pasirinkite datą"
                                 value={values.date}
@@ -192,4 +171,4 @@ const BookAppointment = () => {
     );
 };
 
-export default BookAppointment;
+export default BookSelfReservation;

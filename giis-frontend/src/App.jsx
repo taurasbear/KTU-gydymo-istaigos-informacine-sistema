@@ -5,6 +5,7 @@ import Register from './pages/Register/Register';
 import Messages from './pages/Messages/Messages';
 import ReadMessages from './pages/ReadMessages/ReadMessages';
 import BookAppointment from './pages/BookAppointment/BookAppointment';
+import BookSelfReservation from './pages/BookAppointment/BookSelfReservation';
 import Appointments from './pages/Appointments/Appointments';
 import RegisterDoctor from './pages/RegisterDoctor/RegisterDoctor';
 import RegisterDoctorTimetable from './pages/RegisterDoctorTimetable/RegisterDoctorTimetable';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/messages" element={<ProtectedRoute requiredUserType="GYDYTOJAS" element={<Messages />} />} />
           <Route path="/readmessages" element={<ProtectedRoute requiredUserType="PACIENTAS" element={<ReadMessages />} />} />
           <Route path="/bookappointment" element={<ProtectedRoute requiredUserType="PACIENTAS" element={<BookAppointment />} />} />
+          <Route path="/bookselfreservation" element={<ProtectedRoute requiredUserType="GYDYTOJAS" element={<BookSelfReservation />} />} />
           <Route path="/appointments" element={<ProtectedRoute requiredUserType="GYDYTOJAS" element={<Appointments />} />} />
           <Route path="/registerdoctor" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS" element={<RegisterDoctor />} />} />
           <Route path="/registerdoctortimetable" element={<ProtectedRoute requiredUserType="ADMINISTRATORIUS" element={<RegisterDoctorTimetable />} />} />

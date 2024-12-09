@@ -35,13 +35,37 @@ exports.getAllRezervacijaByUserId = async (req, res) => {
 };
 
 exports.createRezervacija = async (req, res) => {
-    const { nuo_kada, iki_kada, gydytojo_darbo_laikas_id, naudotojas_id } = req.body;
+    const { nuo_kada, iki_kada, gydytojo_user_id, naudotojas_id } = req.body;
+    const date = new Date(nuo_kada.getFullYear(), nuo_kada.getMonth(), nuo_kada.getDate());
 
     try {
+        // Find the Gydytojas by naudotojas_id
+        const gydytojas = await db.Gydytojas.findOne({ where: { naudotojas_id: gydytojo_user_id } });
+        if (!gydytojas) {
+            return res.status(404).json({ message: "Gydytojas not found" });
+        }
+
+        // Find the GydytojoDarboLaikas by gydytojas_id and date
+        const gydytojoDarboLaikas = await db.GydytojoDarboLaikas.findOne({
+            where: {
+                gydytojas_id: gydytojas.id,
+                '$darbo_laikas.data$': date
+            },
+            include: {
+                model: db.DarboLaikas,
+                as: 'darbo_laikas'
+            }
+        });
+
+        if (!gydytojoDarboLaikas) {
+            return res.status(404).json({ message: "Gydytojo darbo laikas not found for the given date" });
+        }
+
+        // Create the Rezervacija
         const rezervacija = await db.Rezervacija.create({
             nuo_kada,
             iki_kada,
-            gydytojo_darbo_laikas_id,
+            gydytojo_darbo_laikas_id: gydytojoDarboLaikas.id,
             naudotojas_id
         });
 
@@ -50,5 +74,4 @@ exports.createRezervacija = async (req, res) => {
         console.error(err);
         res.status(500).json({ message: "Error occurred" });
     }
-
 };
