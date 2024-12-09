@@ -41,7 +41,7 @@ const BookSelfReservation = () => {
             await postData('/api/rezervacija', {
                 nuo_kada: nuoKada,
                 iki_kada: new Date(nuoKada).setMinutes(nuoKada.getMinutes() + values.appointmentLength),
-                gydotojo_user_id: values.doctor,
+                gydotojo_user_id: user.id,
                 naudotojas_id: user.id,
             });
             resetForm()
