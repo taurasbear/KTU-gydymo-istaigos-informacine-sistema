@@ -9,6 +9,7 @@ export const useFetch = (endpoint) => {
         const fetchData = async () => {
             setIsPending(true);
             try {
+                console.log(backendUrl + endpoint)
                 const response = await fetch(backendUrl + endpoint);
                 if (!response.ok) throw new Error(response.statusText);
                 const json = await response.json();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Button, TextField, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,6 +8,9 @@ import { useFetch } from '../../hooks/useFetch';
 import { fetchDataWithPayload, postData } from '../../util/apiCalls';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { resolveTimeFormat } from '@mui/x-date-pickers/internals/utils/time-utils';
+import AuthContext from '../../context/AuthContext';
+
 
 const validationSchema = yup.object({
     doctor: yup.string().required('Pasirinkite gydytoją'),
@@ -23,8 +26,8 @@ const BookAppointment = () => {
     const [startHours, setStartHours] = useState([]);
     const [selectedDoctor, setSelectedDoctor] = useState('');
     const { data: doctors, isPending, error } = useFetch('/api/gydytojas');
-
-    const handleSubmit = (values) => {
+    const { user } = useContext(AuthContext);
+    const handleSubmit = async (values, { resetForm }) => {
         const date = values.date.toDate();
         const time = values.time;
 
@@ -36,14 +39,15 @@ const BookAppointment = () => {
         );
 
         nuoKada.setHours(nuoKada.getHours() + 2);
-
+        console.log('nuoKada', nuoKada)
         try {
-            postData('/api/rezervacija', {
+            await postData('/api/rezervacija', {
                 nuo_kada: nuoKada,
                 iki_kada: new Date(nuoKada).setMinutes(nuoKada.getMinutes() + values.appointmentLength),
                 gydytojo_darbo_laikas_id: values.doctor,
-                naudotojas_id: 1,
+                naudotojas_id: user.id,
             });
+            resetForm()
         }
         catch (error) {
             console.error('Error booking appointment:', error);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Button, MenuItem, Select, FormControl, InputLabel, Box, Typography} from '@mui/material';
 import { useFetch } from '../../hooks/useFetch';
 import { postData } from '../../util/apiCalls';
 import dayjs from 'dayjs';
@@ -14,17 +14,16 @@ const RegisterDoctorTimetable = () => {
 
     const [selectedDoctor, setSelectedDoctor] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
-    const [selectedTimeRange, setSelectedTimeRange] = useState('');
     const [dates, setDates] = useState([]);
 
 
     const { data: doctors, loading: doctorsLoading, error: doctorsError } = useFetch('/api/gydytojas');
 
     const handleSubmit = async () => {
-        // Handle form submission
-        console.log({ doctor: selectedDoctor, date: selectedDate, timeRange: selectedTimeRange });
         try {
             const response = await postData(`/api/gydytojodarbolaikas?gydytojasId=${selectedDoctor.id}&darboLaikasId=${selectedDate.id}`);
+            setSelectedDate('');
+            setSelectedDoctor('');
         }
         catch (error) {
             console.error('Error registering doctor timetable:', error);
@@ -43,8 +42,16 @@ const RegisterDoctorTimetable = () => {
     }
 
     return (
-        <div>
-            <h1>Register Doctor Timetable</h1>
+        <Box
+            sx={{
+                margin: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                maxWidth: 600,
+            }}
+        >
+            <Typography variant="h6">Gydytojų tvarkaraščio registracija</Typography>
             <FormControl fullWidth margin="normal">
                 <InputLabel id="doctor-label">Pasirinkite gydytoją</InputLabel>
                 <Select
@@ -72,7 +79,7 @@ const RegisterDoctorTimetable = () => {
             </FormControl>
             <Button onClick={handleSubmit} variant="contained" color="primary">Sukurti</Button>
             <Button onClick={handleMain} variant="outlined" color="secondary">Pagrindinis puslapis</Button>
-        </div>
+        </Box>
     );
 }
 

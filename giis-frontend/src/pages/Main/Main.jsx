@@ -30,6 +30,10 @@ const Main = () => {
         navigate('/messages');
     }
 
+    const handleReadMessages = () => {
+        navigate('/readmessages');
+    }
+
     const handleBookAppointment = () => {
         navigate('/bookappointment');
     }
@@ -46,6 +50,7 @@ const Main = () => {
         navigate('/registerdoctortimetable');
     }
 
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -57,17 +62,11 @@ const Main = () => {
             {!isAuthenticated && <Button onClick={handleRegister}>Registruotis</Button>}
             {isAuthenticated && <Button onClick={handleLogout}>Atsijungti</Button>}
             {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleMessages}>Žinutės</Button>}
+            {user?.naudotojo_tipas === "PACIENTAS" && <Button onClick={handleReadMessages}>Žinutės</Button>}
             {user?.naudotojo_tipas === "PACIENTAS" && <Button onClick={handleBookAppointment}>Užsirašyti pas gydytoją</Button>}
             {user?.naudotojo_tipas === "GYDYTOJAS" && <Button onClick={handleAppointments}>Rezervacijos</Button>}
             {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctor}>Registruoti gydytoją</Button>}
             {user?.naudotojo_tipas === "ADMINISTRATORIUS" && <Button onClick={handleRegisterDoctorTimetable}>Registruoti gydytojų tvarkaraštį</Button>}
-            {error && <div>{error}</div>}
-            {isPending && <div>Loading...</div>}
-            {data?.map((item) => (
-                <div key={item.id}>
-                    <h2>{item.el_pastas}</h2>
-                </div>
-            ))}
         </div>
     );
 }
