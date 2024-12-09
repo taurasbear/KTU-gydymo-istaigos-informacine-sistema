@@ -56,24 +56,24 @@ const BookSelfReservation = () => {
         navigate('/');
     }
 
-    // const handleDateChange = async (value) => {
-    //     const date = value.toDate();
-    //     const nuoKada = new Date(
-    //         date.getFullYear(),
-    //         date.getMonth(),
-    //         date.getDate(),
-    //     );
-    //     console.log('Nuo kada:', nuoKada);
-    //     console.log('Selected Doctor:', selectedDoctor);
-    //     try {
-    //         await fetchDataWithPayload(`/api/gydytojodarbolaikas/${selectedDoctor}`, {
-    //             date: nuoKada.toISOString(),
-    //         }, setStartHours);
-    //         console.log('Start hours:', startHours);
-    //     } catch (error) {
-    //         console.error('Error fetching start hours:', error);
-    //     }
-    // }
+    const handleDateChange = async (value) => {
+        const date = value.toDate();
+        const nuoKada = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+        );
+        console.log('Nuo kada:', nuoKada);
+        console.log('Selected Doctor:', user.id);
+        try {
+            await fetchDataWithPayload(`/api/gydytojodarbolaikas/${user.id}`, {
+                date: nuoKada.toISOString(),
+            }, setStartHours);
+            console.log('Start hours:', startHours);
+        } catch (error) {
+            console.error('Error fetching start hours:', error);
+        }
+    }
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="lt">
@@ -104,7 +104,7 @@ const BookSelfReservation = () => {
                                 value={values.date}
                                 onChange={(newValue) => {
                                     setFieldValue('date', newValue);
-                                    //handleDateChange(newValue);
+                                    handleDateChange(newValue);
                                 }}
                                 disabled={!values.doctor}
                                 renderInput={(params) => (
