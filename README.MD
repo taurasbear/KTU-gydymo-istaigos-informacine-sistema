@@ -6,7 +6,7 @@ This project is built with React and Express using JavaScript.
 
 # Main goal
 
-Familiarise with Docker and its functionality to build a simple web app.
+Familiarise with Docker and its functionality to build a simple web app. [^1]
 
 # Key points
 
@@ -24,3 +24,4 @@ Familiarise with Docker and its functionality to build a simple web app.
 ![alt text](DB-schema.jpg)
 
 ### Additional Information
+[^1] Due to the goal being about learning Docker, the web app's implementation is quite minimal to say the least. There are a lot of places to improve, especially when it comes to writing clean code :D
